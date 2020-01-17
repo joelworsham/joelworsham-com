@@ -1,0 +1,75 @@
+.app-sidebar {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  height: 100%;
+  top: 0;
+  right: 0;
+  padding: 1rem;
+
+  .widget {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    color: $color-white;
+
+    &:last-child {
+      margin-top: auto;
+      margin-bottom: 0;
+    }
+
+    a {
+      color: inherit;
+    }
+  }
+}
+
+.finish-typing {
+  background: $color-gray;
+  color: $color-light-gray;
+  border: lighten($color-gray, 10%) solid 5px;
+  padding: 1rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  box-shadow: 0 0 1.5rem rgba(#000000, .75);
+  transition: all 350ms;
+
+  &:hover {
+    box-shadow: 0 0 2.5rem rgba(#000000, .5);
+    transform: scale(1.1);
+    transition: all 200ms;
+  }
+}
+
+.widget-button {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0 1rem 1rem;
+  color: $color-light-gray !important;
+  border: transparent solid 5px;
+  border-radius: 1rem;
+  transition: all 350ms;
+
+  &:hover {
+    background: $color-gray;
+    border-color: lighten($color-gray, 10%);
+    cursor: pointer;
+    padding-right: 1rem;
+    box-shadow: 0 0 1.5rem rgba(#000000, .75);
+    transition: all 200ms;
+
+    .text {
+      width: 6rem;
+      transition: all 200ms;
+    }
+  }
+
+  .text {
+    display: block;
+    width: 0;
+    overflow: hidden;
+    margin-right: 1rem;
+    transition: all 350ms;
+  }
+}
