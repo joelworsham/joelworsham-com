@@ -1,11 +1,16 @@
 html, body {
-  background-color: $body-bg;
   font-family: $font-family-base;
 }
 
 .app {
   display: flex;
   min-height: 1vh;
+
+  @each $theme, $colors in $code-themes {
+    &.#{$theme} {
+      background-color: map-get($colors, 'background');
+    }
+  }
 }
 
 .line-numbers {
@@ -15,9 +20,15 @@ html, body {
   flex-shrink: 1;
   width: 4rem;
   padding: 1rem 1rem 1rem 0;
-  background-color: $color-gray;
   text-align: right;
   color: #606366;
+
+  @each $theme, $colors in $code-themes {
+    .#{$theme} & {
+      background-color: map-get($colors, 'line-numbers-background');
+      color: map-get($colors, 'comment');
+    }
+  }
 }
 
 .code-window {

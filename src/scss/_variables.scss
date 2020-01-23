@@ -1,11 +1,30 @@
 $body-bg: #2B2B2B;
 
-$color-gray: #313335;
-$color-light-gray: #808080;
-$color-orange: #CC7832;
-$color-green: #6A8759;
-$color-white: #A9B7C6;
-$color-purple: #9876AA;
-$color-yellow: #DFB867;
-
 $font-family-base: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+$code-themes: (
+        darcula: (
+                cursor: #A9B7C6,
+                background: #313335,
+                line-numbers-background: #313335,
+                dot-color: #505050,
+                comment: #808080,
+                declaration: #CC7832,
+                stringVal: #6A8759,
+                identifier: #A9B7C6,
+                propertyKey: #9876AA,
+                jsx: #DFB867,
+        ),
+        solarized-light: (
+                cursor: #505050,
+                background: #FDF6E3,
+                dot-color: #93A1A1,
+                line-numbers-background: #EEE8D5,
+                comment: #93a1a1,
+                declaration: #268bd2,
+                stringVal: #2aa198,
+                identifier: #657b83,
+                propertyKey: #657b83,
+                jsx: #268bd2,
+        )
+)

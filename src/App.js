@@ -1,14 +1,27 @@
 import React from 'react'
 import Typist from 'react-typist'
-import {faForward} from '@fortawesome/free-solid-svg-icons'
+import {faForward, faCheck} from '@fortawesome/free-solid-svg-icons'
 import {faGithub, faLinkedin, faReact} from '@fortawesome/free-brands-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import './App.scss'
+import 'react-typist/dist/Typist.css'
 import Code from './components/Code'
+
+const codeThemes = [
+    {
+        name: 'Darcula',
+        id: 'darcula',
+    },
+    {
+        name: 'Solarized Light',
+        id: 'solarized-light',
+    },
+];
 
 export default class App extends React.Component {
     state = {
         currentBlock: 0,
+        currentTheme: codeThemes[0],
     };
 
     handleFinishTyping() {
@@ -22,6 +35,9 @@ export default class App extends React.Component {
         const typistProps = this.state.currentBlock === 1000 ? {} : {
             avgTypingDelay: 20,
             stdTypingDelay: 25,
+            cursor: {
+                hideWhenDone: true,
+            },
             onTypingDone: () => {
                 this.nextBlockTimeout = setTimeout(() => {
                     this.setState(prevState => ({
@@ -32,7 +48,7 @@ export default class App extends React.Component {
         };
 
         return (
-            <div className="app">
+            <div className={['app', this.state.currentTheme.id].join(' ')}>
                 <aside className="app-sidebar">
                     {this.state.currentBlock < 1000 && (
                         <div className="widget">
@@ -46,12 +62,14 @@ export default class App extends React.Component {
                         </div>
                     )}
 
-                    <a href="https://github.com/joelworsham" target="_blank" className="widget-button">
+                    <a href="https://github.com/joelworsham" target="_blank" rel="noopener noreferrer"
+                       className="widget-button">
                         <span className="text">GitHub</span>
                         <FontAwesomeIcon icon={faGithub} size="3x"/>
                     </a>
 
-                    <a href="https://www.linkedin.com/in/joel-worsham-51158593/" target="_blank"
+                    <a href="https://www.linkedin.com/in/joel-worsham-51158593/" rel="noopener noreferrer"
+                       target="_blank"
                        className="widget-button">
                         <span className="text">LinkedIn</span>
                         <FontAwesomeIcon icon={faLinkedin} size="3x"/>
@@ -59,9 +77,28 @@ export default class App extends React.Component {
 
                     <div className="widget"/>
 
-                    <div className="widget">
-                        Powered by React&nbsp;
-                        <FontAwesomeIcon icon={faReact} size="2x" spin/>
+                    <div style={{marginTop: 'auto'}}>
+                        <div className="widget no-flex">
+                            {codeThemes.map(theme => (
+                                <button
+                                    key={theme.id}
+                                    className={['code-theme-selector', theme.id].join(' ')}
+                                    type="button"
+                                    title={`Switch to ${theme.name} theme`}
+                                    onClick={() => this.setState({currentTheme: theme})}
+                                >
+                                    {theme.id === this.state.currentTheme.id && (
+                                        <FontAwesomeIcon icon={faCheck}/>
+                                    )}
+                                    <span>{theme.name}</span>
+                                    <span/>
+                                </button>
+                            ))}
+                        </div>
+                        <div className="widget">
+                            Powered by React&nbsp;
+                            <FontAwesomeIcon icon={faReact} size="2x" spin/>
+                        </div>
                     </div>
                 </aside>
 
@@ -73,33 +110,33 @@ export default class App extends React.Component {
 
                 <div className="code-window">
                     <TypistTag {...typistProps}>
-                        <Code color="orange">import</Code>
+                        <Code color="declaration">import</Code>
                         <Code>JoelWorsham</Code>
-                        <Code color="orange">from</Code>
-                        <Code color="green">'./lib/developers'</Code>
+                        <Code color="declaration">from</Code>
+                        <Code color="stringVal">'./lib/developers'</Code>
 
                     </TypistTag>
 
                     {this.state.currentBlock >= 1 && (
                         <TypistTag {...typistProps}>
                             <br/>
-                            <Code color="orange">const</Code>
+                            <Code color="declaration">const</Code>
                             <Code>contactInfo = {'{'}</Code>
 
                             <br/>
-                            <Code color="purple" indent={2} nospace>phone</Code>
+                            <Code color="propertyKey" indent={2} nospace>phone</Code>
                             <Code>:</Code>
                             <a href="tel:5177455884">
-                                <Code color="green" terminate=",">
+                                <Code color="stringVal" terminate=",">
                                     '517-745-5884'
                                 </Code>
                             </a>
 
                             <br/>
-                            <Code color="purple" indent={2} nospace>email</Code>
+                            <Code color="propertyKey" indent={2} nospace>email</Code>
                             <Code>:</Code>
                             <a href="mailto:joelworsham">
-                                <Code color="green" terminate=",">
+                                <Code color="stringVal" terminate=",">
                                     'joelworsham@gmail.com'
                                 </Code>
                             </a>
@@ -112,81 +149,81 @@ export default class App extends React.Component {
                     {this.state.currentBlock >= 2 && (
                         <TypistTag {...typistProps}>
                             <br/>
-                            <Code color="gray">{'/*'}</Code>
+                            <Code color="comment">{'/*'}</Code>
                             <br/>
-                            <Code color="gray" indent={1}>
+                            <Code color="comment" indent={1}>
                                 * Throughout the years, I have been able to learn so much about web and application
                                 development.
                             </Code>
 
                             <br/>
-                            <Code color="gray" indent={1}>
+                            <Code color="comment" indent={1}>
                                 * More than anything else, I always seek work that challenges me to grow and
                                 become a
                             </Code>
 
                             <br/>
-                            <Code color="gray" indent={1}>
+                            <Code color="comment" indent={1}>
                                 * continually more experienced developer. I thrive in my work and love every,
                                 sometimes painful
                             </Code>
 
                             <br/>
-                            <Code color="gray" indent={1}>
+                            <Code color="comment" indent={1}>
                                 * (friday deployment painful), moment.
                             </Code>
 
                             <br/>
-                            <Code color="gray" indent={1}>{'*/'}</Code>
+                            <Code color="comment" indent={1}>{'*/'}</Code>
 
                             <br/>
-                            <Code color="orange">const</Code>
+                            <Code color="declaration">const</Code>
                             <Code>getSkillsAndExperience = type => ({'{'}</Code>
                         </TypistTag>
                     )}
 
                     {this.state.currentBlock >= 3 && (
                         <TypistTag {...typistProps}>
-                            <Code color="gray" indent={2}>
+                            <Code color="comment" indent={2}>
                                 // Development is my primary focus. In addition to building websites and applications,
                                 I’ve
                                 been
                             </Code>
 
                             <br/>
-                            <Code color="gray" indent={2}>
+                            <Code color="comment" indent={2}>
                                 // able to dive deeply into server architecture, development operations, and other
                                 various
                                 backend
                             </Code>
 
                             <br/>
-                            <Code color="gray" indent={2}>
+                            <Code color="comment" indent={2}>
                                 // systems.
                             </Code>
 
                             <br/>
-                            <Code color="purple" indent={2} nospace>DEVELOPMENT</Code>
+                            <Code color="propertyKey" indent={2} nospace>DEVELOPMENT</Code>
                             <Code>: [{'{'}</Code>
 
                             <br/>
-                            <Code color="purple" indent={4} nospace>category</Code>
+                            <Code color="propertyKey" indent={4} nospace>category</Code>
                             <Code>:</Code>
-                            <Code color="green" terminate=",">Programming Languages</Code>
+                            <Code color="stringVal" terminate=",">Programming Languages</Code>
 
                             <br/>
-                            <Code color="purple" indent={4} nospace>items</Code>
+                            <Code color="propertyKey" indent={4} nospace>items</Code>
                             <Code nospace>: [</Code>
 
                             <br/>
-                            <Code color="green" indent={6} terminate=",">'JavaScript (ES6/7+)'</Code>
-                            <Code color="green" terminate=",">'HTML(5)'</Code>
-                            <Code color="green" terminate=",">'CSS(3)'</Code>
-                            <Code color="green" terminate=",">'SASS(SCSS)'</Code>
-                            <Code color="green" terminate=",">'PHP'</Code>
-                            <Code color="green" terminate=",">'JSON'</Code>
-                            <Code color="green" terminate=",">'YML'</Code>
-                            <Code color="green" terminate=",">'Bash/SSH'</Code>
+                            <Code color="stringVal" indent={6} terminate=",">'JavaScript (ES6/7+)'</Code>
+                            <Code color="stringVal" terminate=",">'HTML(5)'</Code>
+                            <Code color="stringVal" terminate=",">'CSS(3)'</Code>
+                            <Code color="stringVal" terminate=",">'SASS(SCSS)'</Code>
+                            <Code color="stringVal" terminate=",">'PHP'</Code>
+                            <Code color="stringVal" terminate=",">'JSON'</Code>
+                            <Code color="stringVal" terminate=",">'YML'</Code>
+                            <Code color="stringVal" terminate=",">'Bash/SSH'</Code>
 
                             <br/>
                             <Code indent={4} terminate=",">]</Code>
@@ -199,35 +236,35 @@ export default class App extends React.Component {
 
                     {this.state.currentBlock >= 4 && (
                         <TypistTag {...typistProps}>
-                            <Code color="purple" indent={4} nospace>category</Code>
+                            <Code color="propertyKey" indent={4} nospace>category</Code>
                             <Code>:</Code>
-                            <Code color="green" terminate=",">Frameworks and Technologies</Code>
+                            <Code color="stringVal" terminate=",">Frameworks and Technologies</Code>
 
                             <br/>
-                            <Code color="purple" indent={4} nospace>items</Code>
+                            <Code color="propertyKey" indent={4} nospace>items</Code>
                             <Code nospace>: [</Code>
 
                             <br/>
-                            <Code color="green" indent={6} terminate=",">'React'</Code>
-                            <Code color="green" terminate=",">'React Native'</Code>
-                            <Code color="green" terminate=",">'Redux'</Code>
-                            <Code color="green" terminate=",">'Node'</Code>
-                            <Code color="green" terminate=",">'Node'</Code>
-                            <Code color="green" terminate=",">'Webpack'</Code>
-                            <Code color="green" terminate=",">'Babel'</Code>
-                            <Code color="green" terminate=",">'SQL'</Code>
-                            <Code color="green" terminate=",">'Postgres'</Code>
+                            <Code color="stringVal" indent={6} terminate=",">'React'</Code>
+                            <Code color="stringVal" terminate=",">'React Native'</Code>
+                            <Code color="stringVal" terminate=",">'Redux'</Code>
+                            <Code color="stringVal" terminate=",">'Node'</Code>
+                            <Code color="stringVal" terminate=",">'Node'</Code>
+                            <Code color="stringVal" terminate=",">'Webpack'</Code>
+                            <Code color="stringVal" terminate=",">'Babel'</Code>
+                            <Code color="stringVal" terminate=",">'SQL'</Code>
+                            <Code color="stringVal" terminate=",">'Postgres'</Code>
 
                             <br/>
-                            <Code color="green" indent={6} terminate=",">'Vue'</Code>
-                            <Code color="green" terminate=",">'Vuex'</Code>
-                            <Code color="green" terminate=",">'Nuxt'</Code>
-                            <Code color="green" terminate=",">'Koa/Express'</Code>
-                            <Code color="green" terminate=",">'JSON'</Code>
-                            <Code color="green" terminate=",">'SPA'</Code>
-                            <Code color="green" terminate=",">'Jest'</Code>
-                            <Code color="green" terminate=",">'Selenium'</Code>
-                            <Code color="green" terminate=",">'Cypress'</Code>
+                            <Code color="stringVal" indent={6} terminate=",">'Vue'</Code>
+                            <Code color="stringVal" terminate=",">'Vuex'</Code>
+                            <Code color="stringVal" terminate=",">'Nuxt'</Code>
+                            <Code color="stringVal" terminate=",">'Koa/Express'</Code>
+                            <Code color="stringVal" terminate=",">'JSON'</Code>
+                            <Code color="stringVal" terminate=",">'SPA'</Code>
+                            <Code color="stringVal" terminate=",">'Jest'</Code>
+                            <Code color="stringVal" terminate=",">'Selenium'</Code>
+                            <Code color="stringVal" terminate=",">'Cypress'</Code>
 
                             <br/>
                             <Code indent={4} terminate=",">]</Code>
@@ -240,21 +277,21 @@ export default class App extends React.Component {
 
                     {this.state.currentBlock >= 5 && (
                         <TypistTag {...typistProps}>
-                            <Code color="purple" indent={4} nospace>category</Code>
+                            <Code color="propertyKey" indent={4} nospace>category</Code>
                             <Code>:</Code>
-                            <Code color="green" terminate=",">Tools, Applications, and Skills</Code>
+                            <Code color="stringVal" terminate=",">Tools, Applications, and Skills</Code>
 
                             <br/>
-                            <Code color="purple" indent={4} nospace>items</Code>
+                            <Code color="propertyKey" indent={4} nospace>items</Code>
                             <Code nospace>: [</Code>
 
                             <br/>
-                            <Code color="green" indent={6} terminate=",">'Git'</Code>
-                            <Code color="green" terminate=",">'Heroku'</Code>
-                            <Code color="green" terminate=",">'Jenkins'</Code>
-                            <Code color="green" terminate=",">'AWS'</Code>
-                            <Code color="green" terminate=",">'Architecting'</Code>
-                            <Code color="green" terminate=",">'Frameworking'</Code>
+                            <Code color="stringVal" indent={6} terminate=",">'Git'</Code>
+                            <Code color="stringVal" terminate=",">'Heroku'</Code>
+                            <Code color="stringVal" terminate=",">'Jenkins'</Code>
+                            <Code color="stringVal" terminate=",">'AWS'</Code>
+                            <Code color="stringVal" terminate=",">'Architecting'</Code>
+                            <Code color="stringVal" terminate=",">'Frameworking'</Code>
 
                             <br/>
                             <Code indent={4} terminate=",">]</Code>
@@ -267,38 +304,38 @@ export default class App extends React.Component {
 
                     {this.state.currentBlock >= 6 && (
                         <TypistTag {...typistProps}>
-                            <Code color="gray" indent={2}>
+                            <Code color="comment" indent={2}>
                                 // Though I do enjoy design and UX, at this point in my career, it mostly serves to
                             </Code>
 
                             <br/>
-                            <Code color="gray" indent={2}>
+                            <Code color="comment" indent={2}>
                                 // empower my ability to help build intuitive, user-friendly applications.
                             </Code>
 
                             <br/>
-                            <Code color="green" indent={2} nospace>'DESIGN/UX'</Code>
+                            <Code color="stringVal" indent={2} nospace>'DESIGN/UX'</Code>
                             <Code>: [{'{'}</Code>
                         </TypistTag>
                     )}
 
                     {this.state.currentBlock >= 7 && (
                         <TypistTag {...typistProps}>
-                            <Code color="purple" indent={4} nospace>category</Code>
+                            <Code color="propertyKey" indent={4} nospace>category</Code>
                             <Code>:</Code>
-                            <Code color="green" terminate=",">'Skills and Experience'</Code>
+                            <Code color="stringVal" terminate=",">'Skills and Experience'</Code>
 
                             <br/>
-                            <Code color="purple" indent={4} nospace>items</Code>
+                            <Code color="propertyKey" indent={4} nospace>items</Code>
                             <Code nospace>: [</Code>
 
                             <br/>
-                            <Code color="green" indent={6} terminate=",">'UX Design'</Code>
-                            <Code color="green" terminate=",">'App/Web Design'</Code>
-                            <Code color="green" terminate=",">'Iconography'</Code>
-                            <Code color="green" terminate=",">'Branding'</Code>
-                            <Code color="green" terminate=",">'Prototyping'</Code>
-                            <Code color="green" terminate=",">'UX Research'</Code>
+                            <Code color="stringVal" indent={6} terminate=",">'UX Design'</Code>
+                            <Code color="stringVal" terminate=",">'App/Web Design'</Code>
+                            <Code color="stringVal" terminate=",">'Iconography'</Code>
+                            <Code color="stringVal" terminate=",">'Branding'</Code>
+                            <Code color="stringVal" terminate=",">'Prototyping'</Code>
+                            <Code color="stringVal" terminate=",">'UX Research'</Code>
 
                             <br/>
                             <Code indent={4} terminate=",">]</Code>
@@ -314,25 +351,25 @@ export default class App extends React.Component {
                     {this.state.currentBlock >= 8 && (
                         <TypistTag {...typistProps}>
                             <br/>
-                            <Code color="orange">const</Code>
+                            <Code color="declaration">const</Code>
                             <Code>workHistoryComponent = () => (</Code>
 
                             <br/>
-                            <Code color="yellow" indent={2}>{'<'}section</Code>
+                            <Code color="jsx" indent={2}>{'<'}section</Code>
                             <Code nospace>class=</Code>
-                            <Code color="green" nospace>"joel-work-history"</Code>
-                            <Code color="yellow">></Code>
+                            <Code color="stringVal" nospace>"joel-work-history"</Code>
+                            <Code color="jsx">></Code>
                         </TypistTag>
                     )}
 
                     {this.state.currentBlock >= 9 && (
                         <TypistTag {...typistProps}>
-                            <Code color="yellow" indent={4} nospace>{'<'}h2></Code>
+                            <Code color="jsx" indent={4} nospace>{'<'}h2></Code>
                             <Code nospace>DMI 2018-Present</Code>
-                            <Code color="yellow">{'<'}/h2></Code>
+                            <Code color="jsx">{'<'}/h2></Code>
 
                             <br/>
-                            <Code color="yellow" indent={4} nospace>{'<'}p></Code>
+                            <Code color="jsx" indent={4} nospace>{'<'}p></Code>
 
                             <br/>
                             <Code indent={6}>
@@ -358,19 +395,19 @@ export default class App extends React.Component {
                             </Code>
 
                             <br/>
-                            <Code color="yellow" indent={4} nospace>{'<'}/p></Code>
+                            <Code color="jsx" indent={4} nospace>{'<'}/p></Code>
                         </TypistTag>
                     )}
 
                     {this.state.currentBlock >= 10 && (
                         <TypistTag {...{...typistProps, ...(this.state.currentBlock === 1000 ? {} : {onTypingDone: () => this.handleFinishTyping()})}}>
                             <br/>
-                            <Code color="yellow" indent={4} nospace>{'<'}h2></Code>
+                            <Code color="jsx" indent={4} nospace>{'<'}h2></Code>
                             <Code nospace>Real Big Marketing 2013-2018</Code>
-                            <Code color="yellow">{'<'}/h2></Code>
+                            <Code color="jsx">{'<'}/h2></Code>
 
                             <br/>
-                            <Code color="yellow" indent={4}>{'<'}p></Code>
+                            <Code color="jsx" indent={4}>{'<'}p></Code>
 
                             <br/>
                             <Code indent={6}>
@@ -396,10 +433,10 @@ export default class App extends React.Component {
                             </Code>
 
                             <br/>
-                            <Code color="yellow" indent={4} nospace>{'<'}/p></Code>
+                            <Code color="jsx" indent={4} nospace>{'<'}/p></Code>
 
                             <br/>
-                            <Code color="yellow" indent={2}>{'<'}/section></Code>
+                            <Code color="jsx" indent={2}>{'<'}/section></Code>
 
                             <br/>
                             <Code>)</Code>

@@ -1,26 +1,16 @@
 .code {
-  &.gray {
-    color: $color-light-gray;
+  @each $theme, $colors in $code-themes {
+    .#{$theme} & {
+      @each $id, $color in $colors {
+        &.#{$id} {
+          color: $color;
+        }
+      }
+    }
   }
 
-  &.orange {
-    color: $color-orange;
-  }
-
-  &.green {
-    color: $color-green;
-  }
-
-  &.white {
-    color: $color-white;
-  }
-
-  &.purple {
-    color: $color-purple;
-  }
-
-  &.yellow {
-    color: $color-yellow;
+  &.jsx {
+    font-weight: bold;
   }
 
   .indent {
@@ -33,8 +23,21 @@
       left: calc(50% - 1px);
       width: 2px;
       height: 2px;
-      background-color: #505050;
       border-radius: 10px;
+
+      @each $theme, $colors in $code-themes {
+        .#{$theme} & {
+          background-color: map-get($colors, 'dot-color');
+        }
+      }
+    }
+  }
+}
+
+.Cursor {
+  @each $theme, $colors in $code-themes {
+    .#{$theme} & {
+      color: map-get($colors, 'cursor');
     }
   }
 }

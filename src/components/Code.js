@@ -2,7 +2,7 @@ import React from 'react'
 
 export default (
     {
-        color = 'white',
+        color = 'identifier',
         indent = 0,
         nospace = false,
         terminate,
@@ -15,7 +15,7 @@ export default (
         ))}
         {children}
         {!!terminate && (
-            <span className="code orange">{terminate}</span>
+            <span className="code declaration">{terminate}</span>
         )}
         {!nospace && '\u00A0'}
     </span>
