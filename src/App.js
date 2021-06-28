@@ -365,7 +365,50 @@ export default class App extends React.Component {
                     {this.state.currentBlock >= 9 && (
                         <TypistTag {...typistProps}>
                             <Code color="jsx" indent={4} nospace>{'<'}h2></Code>
-                            <Code nospace>DMI 2018-Present</Code>
+                            <Code nospace>10up 2021-Present</Code>
+                            <Code color="jsx">{'<'}/h2></Code>
+
+                            <br/>
+                            <Code color="jsx" indent={4} nospace>{'<'}p></Code>
+
+                            <br/>
+                            <Code indent={6}>
+                                Building upon my successes at DMI and Eli Lilly, 10up was my next big leap into
+                                delivering
+                            </Code>
+
+                            <br/>
+                            <Code indent={6}>
+                                cutting edge design systems for large-stake clients. Going back to my roots in WordPress
+                                and PHP,
+                            </Code>
+
+                            <br/>
+                            <Code indent={6}>
+                                I was placed on a team of talented senior developers and designers to deliver a top-tier
+                                web product
+                            </Code>
+
+                            <br/>
+                            <Code indent={6}>
+                                to one of the industry leading pharmaceutical providers, leveraging my speed and
+                                efficiency in
+                            </Code>
+
+                            <br/>
+                            <Code indent={6}>
+                                the front-end web development ecosystem.
+                            </Code>
+
+                            <br/>
+                            <Code color="jsx" indent={4} nospace>{'<'}/p></Code>
+                        </TypistTag>
+                    )}
+
+                    {this.state.currentBlock >= 10 && (
+                        <TypistTag {...typistProps}>
+                            <Code color="jsx" indent={4} nospace>{'<'}h2></Code>
+                            <Code nospace>DMI 2018-2021</Code>
                             <Code color="jsx">{'<'}/h2></Code>
 
                             <br/>
@@ -399,7 +442,7 @@ export default class App extends React.Component {
                         </TypistTag>
                     )}
 
-                    {this.state.currentBlock >= 10 && (
+                    {this.state.currentBlock >= 11 && (
                         <TypistTag {...{...typistProps, ...(this.state.currentBlock === 1000 ? {} : {onTypingDone: () => this.handleFinishTyping()})}}>
                             <br/>
                             <Code color="jsx" indent={4} nospace>{'<'}h2></Code>
