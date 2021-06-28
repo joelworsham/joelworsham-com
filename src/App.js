@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
 import React from 'react'
 import Typist from 'react-typist'
 import {faForward, faCheck} from '@fortawesome/free-solid-svg-icons'
@@ -186,15 +187,13 @@ export default class App extends React.Component {
                         <TypistTag {...typistProps}>
                             <Code color="comment" indent={2}>
                                 // Development is my primary focus. In addition to building websites and applications,
-                                I’ve
-                                been
+                                I’ve been
                             </Code>
 
                             <br/>
                             <Code color="comment" indent={2}>
                                 // able to dive deeply into server architecture, development operations, and other
-                                various
-                                backend
+                                various backend
                             </Code>
 
                             <br/>
